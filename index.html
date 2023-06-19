@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto - API</title>
+    
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <section class="container">
+        <img src="/img/cryptomonedas.png" alt="">
+
+        <div class="column">
+            <form action="#" id="formulario">
+                <div class="moneda">
+                    <label for="moneda">Elige tu moneda</label>
+                    <select name="moneda" id="moneda">
+                        <option value="">Elige tu moneda</option>
+                        <option value="EUR">Euros</option>
+                        <option value="USD">Dolar Estadounidense</option>
+                        <option value="GBP">Libras</option>
+                        <option value="MXN">Peso Mexicano</option>
+                    </select>
+                </div>
+                
+                <div class="criptomoneda">
+                    <label for="criptomoneda">Elige tu criptomoneda</label>
+                    <select name="criptomoneda" id="criptomoneda">
+                        <option value="">Elige tu criptomoneda</option>
+                    </select>
+                </div>
+                
+                <input type="submit" value="Cotizar">
+            </form>
+
+            <div id="resultado" class="resultado">
+            </div>
+        </div>
+    </section>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

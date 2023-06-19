@@ -1,7 +1,7 @@
 ## Crypto - API
 - DOM
-- Fetch()
-- Async Await
+- Fetch() -- 'fetch' branch
+- Async Await -- 'asyncAwait' branch
 
 
 ### Technologies

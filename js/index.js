@@ -58,7 +58,7 @@ function consultarResultado(){
     const {moneda, criptomoneda} = objConsulta
 
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`
-    console.log(url)
+    
     fetch(url)
         .then(respuesta => respuesta.json())
         .then(cotizacion => mostrarHTML(cotizacion.DISPLAY[criptomoneda][moneda]))

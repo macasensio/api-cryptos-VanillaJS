@@ -15,22 +15,22 @@ const objConsulta = {
 document.addEventListener('DOMContentLoaded', () => {
     consultarApi()
     monedaSelect.addEventListener('change', leerValor)
-    criptomoneda.addEventListener('change', leerValor) 
+    criptomoneda.addEventListener('change', leerValor)
     formulario.addEventListener('submit', submitFormulario)
 })
 
 
 //leer valor del select
-function leerValor(e){
+function leerValor(e) {
     objConsulta[e.target.name] = e.target.value
 }
 
-function submitFormulario(e){
+function submitFormulario(e) {
     e.preventDefault()
 
     //validar form
-    const {moneda, criptomoneda} = objConsulta
-    if(moneda === '' || criptomoneda === ''){
+    const { moneda, criptomoneda } = objConsulta
+    if (moneda === '' || criptomoneda === '') {
         mostrarAlerta('Ambos campos son obligatorios')
         return
     }
@@ -38,7 +38,7 @@ function submitFormulario(e){
     consultarResultado()
 }
 
-function mostrarAlerta(msg){
+function mostrarAlerta(msg) {
     limpiarHTML()
     const alerta = document.querySelector('.alerta')
 
@@ -54,20 +54,23 @@ function mostrarAlerta(msg){
     }
 }
 
-function consultarResultado(){
-    const {moneda, criptomoneda} = objConsulta
+async function consultarResultado() {
+    const { moneda, criptomoneda } = objConsulta
 
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`
-    console.log(url)
-    fetch(url)
-        .then(respuesta => respuesta.json())
-        .then(cotizacion => mostrarHTML(cotizacion.DISPLAY[criptomoneda][moneda]))
-        .catch(error => console.error(error))
+
+    try {
+        const respuesta = await fetch(url)
+        const cotizacion = await respuesta.json()
+        mostrarHTML(cotizacion.DISPLAY[criptomoneda][moneda])
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 
-function mostrarHTML(cotizacion){
-    const { LOW24HOUR, HIGH24HOUR, PRICE} = cotizacion
+function mostrarHTML(cotizacion) {
+    const { LOW24HOUR, HIGH24HOUR, PRICE } = cotizacion
     console.log(cotizacion)
     limpiarHTML()
     const respuesta = document.createElement('div')
@@ -80,30 +83,31 @@ function mostrarHTML(cotizacion){
     resultado.appendChild(respuesta)
 }
 
-function limpiarHTML(){
-    while(resultado.firstChild){
+function limpiarHTML() {
+    while (resultado.firstChild) {
         resultado.removeChild(resultado.firstChild)
     }
 }
 
 
 //consultar criptos a la Api
-function consultarApi(){
+async function consultarApi() {
     const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD'
-    
-    fetch(url)
-        .then(respuesta => respuesta.json())
-        .then(resultado => {
-            const criptomonedas = resultado.Data
-            selectCriptomonedas(criptomonedas)
-        })
-        .catch(error => console.error(error))
+
+    try {
+        const respuesta = await fetch(url)
+        const resultado = await respuesta.json()
+        const criptomonedas = await resultado.Data
+        selectCriptomonedas(criptomonedas)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 //selectCriptomonedas
 function selectCriptomonedas(criptomonedas) {
-    criptomonedas.forEach( cripto => {
-        const {FullName, Name} = cripto.CoinInfo
+    criptomonedas.forEach(cripto => {
+        const { FullName, Name } = cripto.CoinInfo
 
         const option = document.createElement('option')
         option.value = Name
